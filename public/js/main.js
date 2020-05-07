@@ -2,17 +2,38 @@ const roomName = document.getElementById('room-name')
 const userList = document.getElementById('users')
 const chatForm = document.getElementById('chat-form')
 const chatMessages = document.querySelector('.chat-messages')
+const inviteButton = document.getElementById('invite-button')
+const inviteLinkField = document.getElementById('invite-link')
 
 window.addEventListener('load', () => {
     const chatField = document.getElementById('msg')
     chatField.focus()
+    updateInviteLink()
 })
 
 const { username, room } = getQuery()
 
-const socket = io()
+if (room == null) {
+    location.href = '/'
+}
 
-socket.emit('joinRoom', { username, room })
+if (username == null) {
+
+    let newUsername = username
+
+    while (newUsername == null) {
+        newUsername = prompt('Enter username:')
+    }
+
+    location.href = encodeURI(`/chat.html?username=${newUsername}&room=${room}`)
+}
+
+let socket = null
+
+if (username != null && room != null) {
+    socket = io()
+    socket.emit('joinRoom', { username, room })
+}
 
 // event listeners
 socket.on('message', (message) => {
@@ -48,12 +69,24 @@ chatForm.addEventListener('submit', (event) => {
     event.target.elements.msg.focus()
 })
 
+inviteButton.addEventListener('click', (event) => {
+    console.log('Click')
+    const tooltipText = document.getElementById('tooltip-text')
+
+    inviteLinkField.select()
+    inviteLinkField.setSelectionRange(0, 999)
+    document.execCommand("copy")
+
+    tooltipText.innerText = 'Copied'
+})
+
 // get the username and room from url
 function getQuery() {
     const search = decodeURI(location.search)
 
     if (!search || search.length === 0) {
-        return null
+        location.href = '/'
+        return
     }
 
     const query = search.replace('?', '').replace(/\+/g, ' ').trim().split('&')
@@ -78,4 +111,13 @@ function outputMessage(message) {
     `;
 
     document.querySelector('.chat-messages').appendChild(div)
+}
+
+function updateInviteLink() {
+    const href = location.href
+    const domain = href.substring(0, href.indexOf('?'))
+
+    console.log(domain)
+
+    inviteLinkField.value = `${domain}?room=${room}`
 }
