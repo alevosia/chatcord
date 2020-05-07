@@ -238,4 +238,30 @@ a {
   .chat-sidebar {
     display: none;
   }
+
+  .chat-header h1 {
+    font-size: 18px;
+  }
+
+  .chat-header btn {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 425px) {
+  .chat-messages {
+    padding: 15px;
+  }
+
+  .chat-form-container {
+    padding: 15px;
+  }
+
+  #msg {
+    height: 30px;
+  }
+
+  button[type="submit"] {
+    padding: 5px 12px 5px 10px;
+  }
 }
