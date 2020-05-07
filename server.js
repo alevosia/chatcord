@@ -12,8 +12,25 @@ const io = socketio(server)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+// Run when a client connects
 io.on('connection', (socket) => {
     console.log(`New SocketIO connection: ${socket.id}`)
+
+    // Welcome newly connected user
+    socket.emit('message', 'Welcome to Chatcord!')
+
+    // Broadcast to others when a user connect
+    socket.broadcast.emit('message', 'A user has joined the chat')
+
+    // Listen for chat message
+    socket.on('chatMessage', (message) => {
+        io.emit('message', message)
+    })
+
+    // Run when client disconnects
+    socket.on('disconnect', () => {
+        io.emit('message', 'A user has left the chat')
+    })
 })
 
 server.listen(PORT, () => {
