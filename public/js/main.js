@@ -50,7 +50,7 @@ socket.on('invite', (text) => {
 socket.on('roomUsers', ({ room, users }) => {
     roomName.innerText = room
     userList.innerHTML = `
-        ${users.map(user => `<li>${user.username}</li>`).join('')}
+        ${users.map(user => `<li class="${user.username === username ? 'me' : ''}">${user.username}</li>`).join('')}
     `
 })
 

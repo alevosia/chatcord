@@ -217,6 +217,11 @@ a {
   opacity: 1;
 }
 
+.me {
+  font-weight: bold;
+  color: black;
+}
+
 #invite-link {
   opacity: 0;
   position: absolute;
