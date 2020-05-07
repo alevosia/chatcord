@@ -3,9 +3,14 @@
   "version": "0.0.1",
   "description": "Realtime chat app with rooms built with express and socket.io",
   "main": "server.js",
+  "engines": {
+    "node": "12.16.0",
+    "npm": "6.13.4"
+  },
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap"
   },
   "dependencies": {
     "dotenv": "^8.2.0",

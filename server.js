@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 
     console.log(`New connection: ${socket.id}`)
 
-    socket.on('joinRoom', ({ username, room}) => {
+    socket.on('joinRoom', ({ username, room }) => {
         const user = userJoin(socket.id, username, room)
 
         console.log('\n--- JOIN ROOM ---\n')
@@ -31,10 +31,16 @@ io.on('connection', (socket) => {
         socket.join(user.room)
 
         // Welcome newly connected user
-        socket.emit('message', formatMessage(BOT_NAME, `Welcome to ChatCord, ${username}!`))
+        socket.emit('message', formatMessage(BOT_NAME, `Welcome to ${room}, ${username}!`))
 
         // Broadcast to others when a user connect
         socket.broadcast.to(user.room).emit('message', formatMessage(BOT_NAME, `${username} has joined the chat.`))
+
+        // Send users and room info
+        io.to(user.room).emit('roomUsers', {
+            room: user.room,
+            users: getRoomUsers(user.room)
+        })
     })
 
     socket.on('invited', ({ username, room}, text) => {
@@ -66,6 +72,12 @@ io.on('connection', (socket) => {
 
         if (user) {
             io.to(user.room).emit('message', formatMessage(BOT_NAME, `${user.username} has left the chat.`))
+
+            // Send users and room info
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                users: getRoomUsers(user.room)
+            })
         }
     })
 })

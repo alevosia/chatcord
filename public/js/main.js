@@ -1,5 +1,12 @@
+const roomName = document.getElementById('room-name')
+const userList = document.getElementById('users')
 const chatForm = document.getElementById('chat-form')
 const chatMessages = document.querySelector('.chat-messages')
+
+window.addEventListener('load', () => {
+    const chatField = document.getElementById('msg')
+    chatField.focus()
+})
 
 const { username, room } = getQuery()
 
@@ -7,7 +14,7 @@ const socket = io()
 
 socket.emit('joinRoom', { username, room })
 
-
+// event listeners
 socket.on('message', (message) => {
     outputMessage(message)
 
@@ -17,6 +24,13 @@ socket.on('message', (message) => {
 
 socket.on('invite', (text) => {
     socket.emit('invited', { username, room }, text)
+})
+
+socket.on('roomUsers', ({ room, users }) => {
+    roomName.innerText = room
+    userList.innerHTML = `
+        ${users.map(user => `<li>${user.username}</li>`).join('')}
+    `
 })
 
 // Message submit
@@ -34,6 +48,7 @@ chatForm.addEventListener('submit', (event) => {
     event.target.elements.msg.focus()
 })
 
+// get the username and room from url
 function getQuery() {
     const search = decodeURI(location.search)
 
