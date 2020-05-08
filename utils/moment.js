@@ -8,7 +8,7 @@ const getCurrentDate = (customFormat = format) => momentTimezone().tz(timezone).
 const getTimeElapsed =  (pastDate) => {
     console.log(pastDate)
 
-    const past = momentTimezone(pastDate, format).tz(timezone, true)
+    const past = momentTimezone(pastDate, format)
     console.log(past)
 
     const now = moment()
