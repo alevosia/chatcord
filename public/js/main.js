@@ -118,7 +118,5 @@ function updateInviteLink() {
     const href = location.href
     const domain = href.substring(0, href.indexOf('?'))
 
-    console.log(domain)
-
-    inviteLinkField.value = `${domain}?room=${room}`
+    inviteLinkField.value = encodeURI(`${domain}?room=${room}`)
 }
