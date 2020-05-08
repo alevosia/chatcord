@@ -1,9 +1,10 @@
-const moment = require('moment');
+// const { getCurrentDate } = require('./moment');
+const { getCurrentDate } = require('./moment')
 
 exports.formatMessage = (username, text) => {
     return {
         username,
         text,
-        time: moment().format('h:mm a')
+        time: getCurrentDate('h:mm a')
     }
 }
