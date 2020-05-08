@@ -5,20 +5,7 @@ const timezone = 'Asia/Manila'
 const format = 'MMMM DD YYYY h:mm:ss a'
 
 const getCurrentDate = (customFormat = format) => momentTimezone().tz(timezone).format(customFormat)
-const getTimeElapsed =  (pastDate) => {
-    console.log(pastDate)
-
-    const past = momentTimezone(pastDate, format).tz(timezone, true)
-    console.log(past)
-
-    const now = momentTimezone()
-    console.log(now)
-
-    const elapsed = past.from(now, false)
-    console.log(elapsed)
-
-    return elapsed
-}
+const getTimeElapsed =  (pastDate) => momentTimezone(pastDate, format).tz(timezone, true).from(moment(), false)
 
 module.exports = {
     format,
