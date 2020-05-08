@@ -33,6 +33,7 @@ let socket = null
 if (username != null && room != null) {
     socket = io()
     socket.emit('joinRoom', { username, room })
+    document.title = room
 }
 
 // event listeners
