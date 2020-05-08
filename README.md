@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.imgur.com/bdfAAfo.png" alt="chatcord">
+    <img src="https://i.imgur.com/Nc7DcSx.png" alt="chatcord">
 </p>
 
 <p align="center">
