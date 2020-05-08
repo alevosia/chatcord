@@ -51,7 +51,6 @@ io.on('connection', (socket) => {
 
         socket.join(user.room)
 
-        // socket.emit('message', formatMessage(BOT_NAME, `You have reconnected to server.`))
         io.to(user.room).emit('message', formatMessage(user.username, text))
     })
     
